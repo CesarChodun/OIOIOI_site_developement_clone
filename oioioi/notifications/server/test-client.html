@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="http://localhost:7887/socket.io/socket.io.js"></script>
+    <script>
+      var socket = io.connect('http://localhost:7887');
+      socket.on('authenticate', function(data) {
+          alert(JSON.stringify(data));
+          $.each(data.nots, function(key, value) {
+             $("<h1>" + value.type + "</h1>" + "<br/><span>" + value.message + "</span>")
+                     .insertAfter('#result');
+          })
+
+      })
+      socket.emit('authenticate', '{"session_id": "832kfxezfjzfk7ydvutevs68wwoscwo1"}');
+
+    </script>
+</head>
+<body>
+    <span id="result"></span>
+</body>
+</html>

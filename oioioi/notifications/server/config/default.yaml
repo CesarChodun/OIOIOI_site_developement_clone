@@ -1,0 +1,9 @@
+AMQP:
+  Url: "amqp://localhost"
+
+OIOIOI:
+  AuthUrl: "http://localhost:8000/notifications/authenticate/"
+  AuthCacheExpirationSeconds: 300
+
+Server:
+  Port: 7887

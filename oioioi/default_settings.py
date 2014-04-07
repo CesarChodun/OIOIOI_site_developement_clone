@@ -105,6 +105,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'oioioi.analytics.processors.analytics_processor',
     'oioioi.status.processors.status_processor',
     'oioioi.programs.processors.drag_and_drop_processor',
+
 )
 
 MIDDLEWARE_CLASSES = (
@@ -167,6 +168,7 @@ INSTALLED_APPS = (
     'oioioi.clock',
     'oioioi.dashboard',
     'oioioi.base',
+    'oioioi.notifications',
 
     'djcelery',
     'kombu.transport.django',
@@ -333,3 +335,9 @@ MEANTIME_ALERT_MESSAGE_SHORTCUT_LENGTH = 50
 # Zeus configuration
 ZEUS_INSTANCES = {
 }
+
+# URL connection string to Notifications Server
+NOTIFICATIONS_SERVER_URL = "http://localhost:7887/"
+
+# Required for Notifications to work
+SESSION_COOKIE_HTTPONLY = False
