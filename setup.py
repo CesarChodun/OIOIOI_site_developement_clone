@@ -72,6 +72,8 @@ setup(
         "chardet",
 
         "django-gravatar2",
+
+        "librabbitmq<1.4.0",
     ],
     packages=find_packages(exclude=['ez_setup']),
     include_package_data=True,

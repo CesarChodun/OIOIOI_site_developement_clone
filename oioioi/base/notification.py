@@ -1,5 +1,10 @@
 import logging
+from librabbitmq import Connection
+import json
+import time
+import datetime
 from oioioi.base.utils.loaders import load_modules
+from django.conf import settings
 
 logger = logging.getLogger(__name__)
 
@@ -44,7 +49,26 @@ class NotificationHandler(logging.StreamHandler):
                (starting with http://) to a page related to
                the notification, where the user can check the details.
         """
-        pass
+        if 'oioioi.notifications' in settings.INSTALLED_APPS:
+            try:
+                # Open a connection to RabbitMQ on localhost
+                conn = Connection(host="localhost")
+
+                message = {}
+
+                # Id of a message is a current timestamp
+                current_time = datetime.datetime.now()
+                message['id'] = time.mktime(current_time.timetuple())
+                message['message'] = notification_message
+
+                channel = conn.channel()
+                channel.queue_declare(queue=user.username, durable=True)
+                channel.basic_publish(exchange='',
+                        routing_key=user.username,
+                        body=json.dumps(message))
+                conn.close()
+            except ConnectionError:
+                logger.info("Notifications: Can't connect to RabbitMQ")
 
     @classmethod
     def register_notification(cls, notification_type, notification_function):
